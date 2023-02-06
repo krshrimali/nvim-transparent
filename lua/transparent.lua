@@ -48,16 +48,12 @@ local clear_group_bg = function(group, highlights)
 
   local ok, err = pcall(vim.cmd, string.format("hi %s ctermbg=NONE guibg=NONE", group))
   if not ok then
-    vim.api.nvim_echo(
+    vim.api.nvim_echo({
       {
-        {
-          string.format("[transparent]:error occurs when setting highlight `%s`: %s", group, err),
-          "ErrorMsg",
-        },
+        string.format("[transparent]:error occurs when setting highlight `%s`: %s", group, err),
+        "ErrorMsg",
       },
-      true,
-      {}
-    )
+    }, true, {})
   end
 end
 
@@ -109,6 +105,7 @@ function M.toggle_transparent(option)
   end
   if vim.g.colors_name then
     vim.cmd("colorscheme " .. vim.g.colors_name)
+    vim.cmd([[hi Search guibg=peru guifg=wheat]])
   else
     vim.cmd("doautocmd ColorScheme")
   end
